@@ -33,7 +33,7 @@ function App() {
     try {
       dispatch(setIsLoading(true))
       const res = await axios({
-        url: 'http://localhost:4000/api/users/howami',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/howami',
         method: 'GET',
         withCredentials: true,
         headers: { 'auth-token': _t },

@@ -20,7 +20,7 @@ const RegisterWithWebAuthn = () => {
 
     try {
       const { data } = await axios({
-        url: 'http://localhost:4000/api/users/webauthn/create',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/webauthn/create',
         method: 'POST',
         data: { email: _email },
         withCredentials: true,
@@ -41,7 +41,7 @@ const RegisterWithWebAuthn = () => {
       const credJson = publicKeyCredentialToJSON(cred)
 
       const res = await axios({
-        url: 'http://localhost:4000/api/users/webauthn/create/response',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/webauthn/create/response',
         method: 'POST',
         data: credJson,
         withCredentials: true,

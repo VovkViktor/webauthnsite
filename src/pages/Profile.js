@@ -41,7 +41,7 @@ const Profile = () => {
     try {
       const { data } = await axios({
         method: 'GET',
-        url: 'http://localhost:4000/api/users/authn-keys',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/authn-keys',
         headers: { 'auth-token': token },
       })
       dispatch(setUserKeys(data))
@@ -55,7 +55,7 @@ const Profile = () => {
     const newPass = e.target.password.value
     const { data } = await axios({
       method: 'POST',
-      url: 'http://localhost:4000/api/users/add-password',
+      url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/add-password',
       headers: { 'auth-token': token },
       data: {
         password: newPass,
@@ -68,7 +68,7 @@ const Profile = () => {
   const handleAddKey = async () => {
     try {
       const { data } = await axios({
-        url: 'http://localhost:4000/api/users/webauthn/create/key',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/webauthn/create/key',
         method: 'GET',
         headers: { 'auth-token': token },
         withCredentials: true,
@@ -81,7 +81,7 @@ const Profile = () => {
       const credJson = publicKeyCredentialToJSON(credentials)
 
       const res = await axios({
-        url: 'http://localhost:4000/api/users/webauthn/create/key/response',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/webauthn/create/key/response',
         method: 'POST',
         data: credJson,
         headers: { 'auth-token': token },
@@ -99,7 +99,7 @@ const Profile = () => {
     ////authn-key/delete/:id
     const result = await axios({
       method: 'DELETE',
-      url: `http://localhost:4000/api/users/authn-key/delete/${_id}`,
+      url: `https://webauthn-unrl3.ondigitalocean.app/api/users/authn-key/delete/${_id}`,
       headers: { 'auth-token': token },
     })
     getUserKeys()

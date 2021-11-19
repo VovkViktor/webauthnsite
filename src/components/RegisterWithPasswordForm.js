@@ -15,7 +15,7 @@ const RegisterWithPasswordForm = () => {
     const _password = e.target.password.value
     try {
       const result = await axios({
-        url: 'http://localhost:4000/api/users/register',
+        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/register',
         method: 'POST',
         data: {
           email: _email,

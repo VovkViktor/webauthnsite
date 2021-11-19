@@ -9,7 +9,7 @@ import { store } from './redux/store'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename="/webauthnsite">
       <Provider store={store}>
         <App />
       </Provider>
