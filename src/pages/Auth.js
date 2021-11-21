@@ -27,7 +27,7 @@ const Auth = () => {
   const handleLoginClick = async () => {
     try {
       const res = await axios({
-        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/login',
+        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/login',
         method: 'POST',
         data: {
           email,
@@ -46,7 +46,7 @@ const Auth = () => {
   const handleClickLoginWithAuthn = async () => {
     try {
       const { data } = await axios({
-        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/webauthn/login',
+        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/login',
         method: 'POST',
         data: { email },
         withCredentials: true,
@@ -59,7 +59,7 @@ const Auth = () => {
       let getAssertionResponse = publicKeyCredentialToJSON(res)
 
       const { data: userData } = await axios({
-        url: 'https://webauthn-unrl3.ondigitalocean.app/api/users/webauthn/login/response',
+        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/login/response',
         method: 'POST',
         data: getAssertionResponse,
         withCredentials: true,
