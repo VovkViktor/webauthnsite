@@ -1,6 +1,5 @@
 {
-  "homepage": "https://vovkviktor.github.io/webauthnsite/",
-  "name": "my-app",
+  "name": "learwebauthn",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,9 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "deploy": "gh-pages -d build"
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +44,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3",
     "prettier": "^2.4.1"
   }
 }
