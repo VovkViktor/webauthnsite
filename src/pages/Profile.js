@@ -31,8 +31,17 @@ const Profile = () => {
   const userKeys = useSelector(getUserKeysSelector)
   const isPassword = useSelector(getIsPasswordSelector)
 
-  const handleLogoutClick = () => {
-    dispatch(logout())
+  const handleLogoutClick = async () => {
+    try {
+      await axios({
+        method: 'GET',
+        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/logout',
+        withCredentials: true,
+      })
+      dispatch(logout())
+    } catch (error) {
+      handleError(error, dispatch)
+    }
   }
 
   const getUserKeys = async () => {
