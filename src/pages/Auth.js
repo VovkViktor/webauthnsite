@@ -99,6 +99,7 @@ const Auth = () => {
           onChange={(e) => {
             setemail(e.target.value)
           }}
+          type="email"
         />
         <TextField
           label="Password"

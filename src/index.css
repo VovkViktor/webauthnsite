@@ -12,12 +12,8 @@ code {
     monospace;
 }
 
-.App {
-  
-}
-
 .container {
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   background-color: grey;
   display: flex;
@@ -36,7 +32,7 @@ code {
   padding: 20px 10px;
 }
 .container_profile {
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   background-color: grey;
   display: flex;
