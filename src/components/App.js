@@ -29,19 +29,17 @@ function App() {
   const isAuth = useSelector(getIsAuthSelector)
   const errorMessage = useSelector(getErrorMessage)
 
-  const howami = async (_t) => {
+  const howami = async () => {
     try {
       dispatch(setIsLoading(true))
       const res = await axios({
         url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/howami',
         method: 'GET',
         withCredentials: true,
-        headers: { 'auth-token': _t },
       })
       dispatch(setUser(res.data))
       dispatch(setIsAuth(true))
     } catch (error) {
-      localStorage.removeItem('token')
       dispatch(setIsAuth(false))
     } finally {
       dispatch(setIsLoading(false))
@@ -63,10 +61,7 @@ function App() {
   }, [isAuth, history])
 
   useEffect(() => {
-    const _token = localStorage.getItem('token')
-    if (_token) {
-      howami(_token)
-    }
+    howami()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

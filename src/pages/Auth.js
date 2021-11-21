@@ -36,7 +36,6 @@ const Auth = () => {
       })
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
-      localStorage.setItem('token', res.data.token)
     } catch (error) {
       dispatch(setIsAuth(false))
       handleError(error, dispatch)
@@ -64,11 +63,9 @@ const Auth = () => {
         data: getAssertionResponse,
         withCredentials: true,
       })
-      if (userData.token) {
-        localStorage.setItem('token', userData.token)
-        dispatch(setIsAuth(true))
-        dispatch(setUser(userData))
-      }
+
+      dispatch(setIsAuth(true))
+      dispatch(setUser(userData))
     } catch (error) {
       handleError(error, dispatch)
     }

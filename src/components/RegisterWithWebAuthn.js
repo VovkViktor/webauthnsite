@@ -49,7 +49,6 @@ const RegisterWithWebAuthn = () => {
 
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
-      localStorage.setItem('token', res.data.token)
     } catch (error) {
       handleError(error, dispatch)
     }

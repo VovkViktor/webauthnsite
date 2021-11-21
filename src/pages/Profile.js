@@ -26,15 +26,12 @@ import {
 } from '../utils'
 
 const Profile = () => {
-  const [token, setToken] = useState(null)
-
   const dispatch = useDispatch()
   const userEmail = useSelector(getEmailSelector)
   const userKeys = useSelector(getUserKeysSelector)
   const isPassword = useSelector(getIsPasswordSelector)
 
   const handleLogoutClick = () => {
-    localStorage.removeItem('token')
     dispatch(logout())
   }
 
@@ -43,7 +40,7 @@ const Profile = () => {
       const { data } = await axios({
         method: 'GET',
         url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/authn-keys',
-        headers: { 'auth-token': token },
+        withCredentials: true,
       })
       dispatch(setUserKeys(data))
     } catch (error) {
@@ -54,16 +51,20 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const newPass = e.target.password.value
-    const { data } = await axios({
-      method: 'POST',
-      url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/add-password',
-      headers: { 'auth-token': token },
-      data: {
-        password: newPass,
-      },
-    })
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/add-password',
+        withCredentials: true,
+        data: {
+          password: newPass,
+        },
+      })
 
-    dispatch(setUser(data))
+      dispatch(setUser(data))
+    } catch (error) {
+      handleError(error, dispatch)
+    }
   }
 
   const handleAddKey = async () => {
@@ -71,7 +72,6 @@ const Profile = () => {
       const { data } = await axios({
         url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/create/key',
         method: 'GET',
-        headers: { 'auth-token': token },
         withCredentials: true,
       })
 
@@ -81,11 +81,10 @@ const Profile = () => {
 
       const credJson = publicKeyCredentialToJSON(credentials)
 
-      const res = await axios({
+      await axios({
         url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/create/key/response',
         method: 'POST',
         data: credJson,
-        headers: { 'auth-token': token },
         withCredentials: true,
       })
 
@@ -97,20 +96,19 @@ const Profile = () => {
 
   const handleDeleteKey = async (e) => {
     const _id = e.currentTarget.dataset.id
-    ////authn-key/delete/:id
-    const result = await axios({
-      method: 'DELETE',
-      url: `https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/authn-key/delete/${_id}`,
-      headers: { 'auth-token': token },
-    })
-    getUserKeys()
-    console.log('result', result)
+    try {
+      await axios({
+        method: 'DELETE',
+        url: `https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/authn-key/delete/${_id}`,
+        withCredentials: true,
+      })
+      getUserKeys()
+    } catch (error) {
+      handleError(error, dispatch)
+    }
   }
 
   useEffect(() => {
-    const _token = localStorage.getItem('token')
-    setToken(_token)
-
     getUserKeys()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

@@ -24,7 +24,6 @@ const RegisterWithPasswordForm = () => {
       })
       dispatch(setIsAuth(true))
       dispatch(setUser(result.data))
-      localStorage.setItem('token', result.data.token)
     } catch (error) {
       handleError(error, dispatch)
     }
