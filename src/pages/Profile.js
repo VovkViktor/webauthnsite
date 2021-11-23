@@ -178,7 +178,7 @@ const Profile = () => {
               backgroundColor: 'cornflowerblue',
             }}
           >
-            {userKeys.map((key) => {
+            {userKeys.map((key, index) => {
               return (
                 <ListItem
                   key={key._id}
@@ -199,7 +199,7 @@ const Profile = () => {
                 >
                   <ListItemText
                     secondary={key.key.publicKey}
-                    primary={userKeys.length}
+                    primary={`${index + 1}: `}
                     style={{ overflow: 'hidden', overflowWrap: 'break-word' }}
                   />
                 </ListItem>
