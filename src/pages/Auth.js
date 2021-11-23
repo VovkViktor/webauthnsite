@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
+import api from '../api'
 import {
   setIsAuth,
   setUser,
@@ -24,14 +24,11 @@ const Auth = () => {
 
   const handleLoginClick = async () => {
     try {
-      const res = await axios({
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/login',
-        method: 'POST',
-        data: {
-          email,
-          password,
-        },
+      const res = await api.users.login({
+        email,
+        password,
       })
+
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
     } catch (error) {
@@ -42,12 +39,7 @@ const Auth = () => {
 
   const handleClickLoginWithAuthn = async () => {
     try {
-      const { data } = await axios({
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/login',
-        method: 'POST',
-        data: { email },
-        withCredentials: true,
-      })
+      const { data } = await api.users.loginWebAuthnGetCred({ email })
 
       const publicKey = preformatGetAssertReq(data)
 
@@ -55,12 +47,9 @@ const Auth = () => {
 
       let getAssertionResponse = publicKeyCredentialToJSON(res)
 
-      const { data: userData } = await axios({
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/login/response',
-        method: 'POST',
-        data: getAssertionResponse,
-        withCredentials: true,
-      })
+      const { data: userData } = await api.users.loginWebAuthnResponce(
+        getAssertionResponse
+      )
 
       dispatch(setIsAuth(true))
       dispatch(setUser(userData))
@@ -90,9 +79,8 @@ const Auth = () => {
           Login
         </Typography>
         <TextField
-          label="Email"
+          placeholder="email"
           style={{ marginBottom: '15px' }}
-          autoComplete="off"
           value={email}
           onChange={(e) => {
             setemail(e.target.value)
@@ -100,16 +88,14 @@ const Auth = () => {
           type="email"
         />
         <TextField
-          label="Password"
-          variant="outlined"
+          placeholder="password"
           type="password"
-          autoComplete="off false"
           value={password}
+          style={{ marginBottom: '15px' }}
           onChange={(e) => {
             setPassword(e.target.value)
           }}
         />
-        <br />
         <Button
           variant="text"
           onClick={handleLoginClick}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@mui/material/Button'
@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import TextField from '@mui/material/TextField'
+
+import api from '../api'
 import {
   logout,
   getEmailSelector,
@@ -17,7 +19,6 @@ import {
   getIsPasswordSelector,
   setUser,
 } from '../redux/reducers/profile'
-import axios from 'axios'
 import {
   publicKeyCredentialToJSON,
   preformatMakeCredReq,
@@ -34,11 +35,7 @@ const Profile = () => {
 
   const handleLogoutClick = async () => {
     try {
-      await axios({
-        method: 'GET',
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/logout',
-        withCredentials: true,
-      })
+      await api.users.logout()
       dispatch(logout())
     } catch (error) {
       handleError(error)
@@ -47,11 +44,7 @@ const Profile = () => {
 
   const getUserKeys = async () => {
     try {
-      const { data } = await axios({
-        method: 'GET',
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/authn-keys',
-        withCredentials: true,
-      })
+      const { data } = await api.users.getUserKeys()
       dispatch(setUserKeys(data))
     } catch (error) {
       handleError(error)
@@ -60,15 +53,10 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const newPass = e.target.password.value
+    const password = e.target.password.value
     try {
-      const { data } = await axios({
-        method: 'POST',
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/add-password',
-        withCredentials: true,
-        data: {
-          password: newPass,
-        },
+      const { data } = await api.users.createPassword({
+        password,
       })
 
       dispatch(setUser(data))
@@ -79,11 +67,7 @@ const Profile = () => {
 
   const handleAddKey = async () => {
     try {
-      const { data } = await axios({
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/create/key',
-        method: 'GET',
-        withCredentials: true,
-      })
+      const { data } = await api.users.createKeyWebAuthnGetCred()
 
       const publicKeyCredentialCreationOptions = preformatMakeCredReq(data)
 
@@ -91,28 +75,19 @@ const Profile = () => {
 
       const credJson = publicKeyCredentialToJSON(credentials)
 
-      await axios({
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/webauthn/create/key/response',
-        method: 'POST',
-        data: credJson,
-        withCredentials: true,
-      })
+      await api.users.createKeyWebAuthnResponce(credJson)
 
-      getUserKeys()
+      await getUserKeys()
     } catch (error) {
       handleError(error)
     }
   }
 
   const handleDeleteKey = async (e) => {
-    const _id = e.currentTarget.dataset.id
+    const id = e.currentTarget.dataset.id
     try {
-      await axios({
-        method: 'DELETE',
-        url: `https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/authn-key/delete/${_id}`,
-        withCredentials: true,
-      })
-      getUserKeys()
+      await api.users.deleteUserKey(id)
+      await getUserKeys()
     } catch (error) {
       handleError(error)
     }

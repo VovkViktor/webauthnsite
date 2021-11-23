@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 
+import api from '../api'
 import {
   getIsLoadingSelector,
   getErrorMessage,
@@ -32,11 +32,7 @@ function App() {
   const howami = async () => {
     try {
       dispatch(setIsLoading(true))
-      const res = await axios({
-        url: 'https://learnwebauthn-vb5r9.ondigitalocean.app/api/users/howami',
-        method: 'GET',
-        withCredentials: true,
-      })
+      const res = await api.users.whoAmI()
       dispatch(setUser(res.data))
       dispatch(setIsAuth(true))
     } catch (error) {
