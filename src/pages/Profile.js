@@ -147,8 +147,9 @@ const Profile = () => {
         className="keys_container"
         style={{
           marginTop: '50px',
-          width: '50%',
-          padding: '30px',
+          width: '90%',
+          maxWidth: '400px',
+          padding: '10px',
           backgroundColor: '#fff',
         }}
       >
@@ -197,7 +198,8 @@ const Profile = () => {
                   }
                 >
                   <ListItemText
-                    primary={key.key.publicKey}
+                    secondary={key.key.publicKey}
+                    primary={userKeys.length}
                     style={{ overflow: 'hidden', overflowWrap: 'break-word' }}
                   />
                 </ListItem>
