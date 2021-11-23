@@ -19,17 +19,18 @@ import {
 } from '../redux/reducers/profile'
 import axios from 'axios'
 import {
-  handleError,
   publicKeyCredentialToJSON,
   preformatMakeCredReq,
   createCred,
 } from '../utils'
+import { useErrorHandle } from '../customHook/useErrorHandle'
 
 const Profile = () => {
   const dispatch = useDispatch()
   const userEmail = useSelector(getEmailSelector)
   const userKeys = useSelector(getUserKeysSelector)
   const isPassword = useSelector(getIsPasswordSelector)
+  const handleError = useErrorHandle()
 
   const handleLogoutClick = async () => {
     try {
@@ -40,7 +41,7 @@ const Profile = () => {
       })
       dispatch(logout())
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 
@@ -53,7 +54,7 @@ const Profile = () => {
       })
       dispatch(setUserKeys(data))
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 
@@ -72,7 +73,7 @@ const Profile = () => {
 
       dispatch(setUser(data))
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 
@@ -99,7 +100,7 @@ const Profile = () => {
 
       getUserKeys()
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 
@@ -113,7 +114,7 @@ const Profile = () => {
       })
       getUserKeys()
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 

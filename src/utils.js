@@ -55,18 +55,6 @@ export const preformatGetAssertReq = (getAssert) => {
   return getAssert
 }
 
-export const handleError = (error, dispatch) => {
-  if (error?.response?.data?.message) {
-    dispatch(setErrorMessage(error?.response?.data?.message))
-  } else {
-    if (error?.message) {
-      dispatch(setErrorMessage(error?.message))
-    } else {
-      dispatch(setErrorMessage('something went wrong'))
-    }
-  }
-}
-
 export const createCred = async (publicKey) => {
   return await navigator.credentials.create({
     publicKey,

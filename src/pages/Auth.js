@@ -11,11 +11,8 @@ import {
   setUser,
   getIsAuthSelector,
 } from '../redux/reducers/profile'
-import {
-  publicKeyCredentialToJSON,
-  preformatGetAssertReq,
-  handleError,
-} from '../utils.js'
+import { publicKeyCredentialToJSON, preformatGetAssertReq } from '../utils.js'
+import { useErrorHandle } from '../customHook/useErrorHandle'
 
 const Auth = () => {
   const dispatch = useDispatch()
@@ -23,6 +20,7 @@ const Auth = () => {
   const [email, setemail] = useState('')
   const [password, setPassword] = useState('')
   const isAuth = useSelector(getIsAuthSelector)
+  const handleError = useErrorHandle()
 
   const handleLoginClick = async () => {
     try {
@@ -38,7 +36,7 @@ const Auth = () => {
       dispatch(setUser(res.data))
     } catch (error) {
       dispatch(setIsAuth(false))
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 
@@ -67,7 +65,7 @@ const Auth = () => {
       dispatch(setIsAuth(true))
       dispatch(setUser(userData))
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 

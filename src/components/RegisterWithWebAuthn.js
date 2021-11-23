@@ -3,16 +3,17 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { handleError } from '../utils'
 import { setIsAuth, setUser } from '../redux/reducers/profile'
 import {
   publicKeyCredentialToJSON,
   preformatMakeCredReq,
   createCred,
 } from '../utils'
+import { useErrorHandle } from '../customHook/useErrorHandle'
 
 const RegisterWithWebAuthn = () => {
   const dispatch = useDispatch()
+  const handleError = useErrorHandle()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -32,7 +33,7 @@ const RegisterWithWebAuthn = () => {
 
       await handleResponce(credentials)
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 
@@ -50,7 +51,7 @@ const RegisterWithWebAuthn = () => {
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
     } catch (error) {
-      handleError(error, dispatch)
+      handleError(error)
     }
   }
 

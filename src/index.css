@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(215, 215, 215);
 }
 
 code {
@@ -13,9 +14,10 @@ code {
 }
 
 .container {
-  height: 80vh;
+  height: 100%;
+  min-height: 90vh;
   width: 100%;
-  background-color: grey;
+  
   display: flex;
   justify-content: center;
   align-items: center;

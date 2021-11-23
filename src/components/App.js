@@ -46,13 +46,13 @@ function App() {
     }
   }
 
-  // useEffect(() => {
-  //   if (errorMessage) {
-  //     setTimeout(() => {
-  //       dispatch(setErrorMessage(''))
-  //     }, 3000)
-  //   }
-  // }, [dispatch, errorMessage])
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        dispatch(setErrorMessage(''))
+      }, 5000)
+    }
+  }, [dispatch, errorMessage])
 
   useEffect(() => {
     if (isAuth) {
