@@ -199,7 +199,9 @@ const Profile = () => {
                 >
                   <ListItemText
                     secondary={key.key.publicKey}
-                    primary={`${index + 1}: `}
+                    primary={`${index + 1}: ${new Date(
+                      key.dateCreate
+                    ).toLocaleString()}`}
                     style={{ overflow: 'hidden', overflowWrap: 'break-word' }}
                   />
                 </ListItem>
