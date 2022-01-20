@@ -1,7 +1,4 @@
 import base64url from 'base64url'
-import { useDispatch } from 'react-redux'
-
-import { setErrorMessage } from './redux/reducers/profile'
 
 export const publicKeyCredentialToJSON = (pubKeyCred) => {
   if (pubKeyCred instanceof Array) {

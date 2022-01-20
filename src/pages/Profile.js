@@ -139,7 +139,7 @@ const Profile = () => {
               defaultValue=""
             />
 
-            <Button type="submit">Safe Password</Button>
+            <Button type="submit">Save Password</Button>
           </form>
         </div>
       )}
