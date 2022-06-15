@@ -84,7 +84,7 @@ const Register = () => {
           onChange={(e) => {
             setPassword(e.target.value)
           }}
-          disabled={!password || !email}
+        //disabled={!password || !email}
         />
         <Button
           variant="text"
