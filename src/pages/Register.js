@@ -38,19 +38,13 @@ const Register = () => {
     try {
       const { data } = await api.users.registerWebAuthnGetCred({ email })
 
-      console.log('Response data from webAuthn creater req', JSON.parse(JSON.stringify(data)))
-
       const publicKeyCredentialCreationOptions = preformatMakeCredReq(data)
 
-      console.log('publicKeyCredentialCreationOptions', publicKeyCredentialCreationOptions)
-
-      const credentials = await createCred(publicKeyCredentialCreationOptions)
-
-      console.log('credentials', credentials)
+      const credentials = await navigator.credentials.create({
+        publicKey: publicKeyCredentialCreationOptions,
+      })
 
       const credJson = publicKeyCredentialToJSON(credentials)
-
-      console.log('credentials JSON', credJson)
 
       const res = await api.users.registerWebAuthnResponce(credJson)
 
