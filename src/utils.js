@@ -26,14 +26,7 @@ export const publicKeyCredentialToJSON = (pubKeyCred) => {
   return pubKeyCred
 }
 
-export const generateRandomBuffer = (len) => {
-  len = len || 32
 
-  let randomBuffer = new Uint8Array(len)
-  window.crypto.getRandomValues(randomBuffer)
-
-  return randomBuffer
-}
 
 export const preformatMakeCredReq = (makeCredReq) => {
   makeCredReq.challenge = base64url.toBuffer(makeCredReq.challenge)
@@ -41,6 +34,8 @@ export const preformatMakeCredReq = (makeCredReq) => {
 
   return makeCredReq
 }
+
+
 
 export const preformatGetAssertReq = (getAssert) => {
   getAssert.challenge = base64url.toBuffer(getAssert.challenge)
@@ -52,8 +47,17 @@ export const preformatGetAssertReq = (getAssert) => {
   return getAssert
 }
 
-export const createCred = async (publicKey) => {
-  return await navigator.credentials.create({
-    publicKey,
-  })
-}
+// export const createCred = async (publicKey) => {
+//   return await navigator.credentials.create({
+//     publicKey,
+//   })
+// }
+
+// export const generateRandomBuffer = (len) => {
+//   len = len || 32
+
+//   let randomBuffer = new Uint8Array(len)
+//   window.crypto.getRandomValues(randomBuffer)
+
+//   return randomBuffer
+// }

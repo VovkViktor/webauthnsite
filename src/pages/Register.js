@@ -11,7 +11,7 @@ import { useErrorHandle } from '../customHook/useErrorHandle'
 import {
   publicKeyCredentialToJSON,
   preformatMakeCredReq,
-  createCred,
+  //createCred,
 } from '../utils'
 
 const Register = () => {
@@ -38,11 +38,21 @@ const Register = () => {
     try {
       const { data } = await api.users.registerWebAuthnGetCred({ email })
 
+      console.log('Response data from webAuthn creater req', data)
+
       const publicKeyCredentialCreationOptions = preformatMakeCredReq(data)
 
-      const credentials = await createCred(publicKeyCredentialCreationOptions)
+      console.log('publicKeyCredentialCreationOptions', publicKeyCredentialCreationOptions)
+
+      const credentials = await navigator.credentials.create({
+        publicKeyCredentialCreationOptions,
+      })
+
+      console.log('credentials', credentials)
 
       const credJson = publicKeyCredentialToJSON(credentials)
+
+      console.log('credentials JSON', credJson)
 
       const res = await api.users.registerWebAuthnResponce(credJson)
 

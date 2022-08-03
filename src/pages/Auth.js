@@ -41,11 +41,19 @@ const Auth = () => {
     try {
       const { data } = await api.users.loginWebAuthnGetCred({ email })
 
+      console.log('Response data for webauthn login', data)
+
       const publicKey = preformatGetAssertReq(data)
+
+      console.log('publicKey', publicKey)
 
       const res = await navigator.credentials.get({ publicKey })
 
+      console.log('responce from webauth api', res)
+
       let getAssertionResponse = publicKeyCredentialToJSON(res)
+
+      console.log('getAssertionResponse', getAssertionResponse)
 
       const { data: userData } = await api.users.loginWebAuthnResponce(
         getAssertionResponse

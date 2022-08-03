@@ -115,7 +115,7 @@ const Profile = () => {
       {!isPassword && (
         <div style={{ padding: '30px', backgroundColor: '#fff' }}>
           <span style={{ color: 'darkorange', marginBottom: '15px' }}>
-            You not have password! Please create password!
+            You do not have a password! Please create the password!
           </span>
           <form
             name="addPasswordForm"
