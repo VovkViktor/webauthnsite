@@ -53,11 +53,11 @@ export const createCred = async (publicKey) => {
   })
 }
 
-// export const generateRandomBuffer = (len) => {
-//   len = len || 32
+export const generateRandomBuffer = (len) => {
+  len = len || 32
 
-//   let randomBuffer = new Uint8Array(len)
-//   window.crypto.getRandomValues(randomBuffer)
+  let randomBuffer = new Uint8Array(len)
+  window.crypto.getRandomValues(randomBuffer)
 
-//   return randomBuffer
-// }
+  return randomBuffer
+}

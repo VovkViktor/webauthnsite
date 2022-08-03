@@ -11,7 +11,7 @@ import { useErrorHandle } from '../customHook/useErrorHandle'
 import {
   publicKeyCredentialToJSON,
   preformatMakeCredReq,
-  //createCred,
+  createCred,
 } from '../utils'
 
 const Register = () => {
@@ -44,9 +44,7 @@ const Register = () => {
 
       console.log('publicKeyCredentialCreationOptions', publicKeyCredentialCreationOptions)
 
-      const credentials = await navigator.credentials.create({
-        publicKeyCredentialCreationOptions,
-      })
+      const credentials = await createCred(publicKeyCredentialCreationOptions)
 
       console.log('credentials', credentials)
 
