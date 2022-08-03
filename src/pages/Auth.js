@@ -41,7 +41,7 @@ const Auth = () => {
     try {
       const { data } = await api.users.loginWebAuthnGetCred({ email })
 
-      console.log('Response data for webauthn login', data)
+      console.log('Response data for webauthn login', JSON.parse(JSON.stringify(data)))
 
       const publicKey = preformatGetAssertReq(data)
 
