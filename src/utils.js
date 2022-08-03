@@ -47,11 +47,11 @@ export const preformatGetAssertReq = (getAssert) => {
   return getAssert
 }
 
-// export const createCred = async (publicKey) => {
-//   return await navigator.credentials.create({
-//     publicKey,
-//   })
-// }
+export const createCred = async (publicKey) => {
+  return await navigator.credentials.create({
+    publicKey,
+  })
+}
 
 // export const generateRandomBuffer = (len) => {
 //   len = len || 32
